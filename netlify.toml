@@ -1,0 +1,3 @@
+[build]
+  functions = "lambdas/"
+  command = "yarn build"
