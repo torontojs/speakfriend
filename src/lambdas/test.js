@@ -1,4 +1,4 @@
-let forward = ({ callback, body }) =>
+let forward = (body, callback) =>
   callback(null, {
     statusCode: 200,
     headers: {
@@ -7,5 +7,6 @@ let forward = ({ callback, body }) =>
     body: JSON.stringify(body),
   })
 
-exports.handler = (event, context, callback) =>
-  forward({ callback, body: { test: 123 } })
+exports.handler = (event, context, callback) => {
+  forward({ test: 123 }, callback)
+}
