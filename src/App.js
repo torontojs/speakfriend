@@ -5,7 +5,7 @@ import { Box } from 'rebass'
 import theme from './theme'
 import Header from './Header'
 import Nav from './Nav'
-import Speakers from './Speakers'
+import Entity from './Entity'
 
 export default () => (
   <BrowserRouter>
@@ -14,8 +14,7 @@ export default () => (
         <Header />
         <Nav />
         <Box p="24px">
-          <Route exact path="/" component={Speakers} />
-          <Route path="/speakers" component={Speakers} />
+          <Route path="/:entity" component={Entity} />
         </Box>
       </>
     </ThemeProvider>

@@ -14,7 +14,7 @@ export default () => (
       <Box p="8px">
         <Route>
           {({ location }) => (
-            <Link active="test" to="speakers">
+            <Link className={location.pathname} to="speakers">
               speakers
             </Link>
           )}
