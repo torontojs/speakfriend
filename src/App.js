@@ -6,6 +6,7 @@ import theme from './theme'
 import Header from './Header'
 import Nav from './Nav'
 import Entity from './Entity'
+import SpeakerForm from './SpeakerForm';
 
 export default () => (
   <BrowserRouter>
@@ -16,6 +17,7 @@ export default () => (
         <Box p="24px">
           <Route path="/:entity" component={Entity} />
         </Box>
+        <SpeakerForm />
       </>
     </ThemeProvider>
   </BrowserRouter>
