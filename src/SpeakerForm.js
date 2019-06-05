@@ -1,6 +1,6 @@
 import React from 'react';
 
-class SpeakerForm extends Component {
+class SpeakerForm extends React.component {
   render() {
     return (
       <form action="">
