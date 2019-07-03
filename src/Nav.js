@@ -6,6 +6,9 @@ import { Route, Link as UnstyledLink } from 'react-router-dom'
 
 let Link = styled(UnstyledLink)`
   color: ${props => props.theme.colors.primary};
+  &:hover {
+    color: ${props => props.theme.colors.secondary}
+  }
 `
 
 export default () => (
