@@ -8,8 +8,8 @@ export default () => (
       <Fade bottom>
         <Text
           fontSize={['16px', '32px', '64px']}
-          fontWeight={100}
-          color="primary"
+          fontWeight={700}
+          color="#000"
           letterSpacing={1.2}
         >
           speakfriend
