@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Card } from 'rebass'
+import Fade from 'react-reveal/Fade'
+import { Card, Flex } from 'rebass'
 import join from 'url-join'
 import { singular } from 'pluralize'
 import { BASE_URL, WORKSPACE, API_KEY } from './constants'
@@ -19,9 +20,13 @@ let Entity = ({ match, location }) => {
         },
       })
         .then(parseJSON)
-        .then(({ records }) => {
-          setRecords(records)
-          setLoading(false)
+        .then(({ records , error}) => {
+          if(records){
+            setRecords(records)
+            setLoading(false)
+          } else {
+            console.log(error.type);
+          }
         })
     },
     [location.pathname],
@@ -29,22 +34,33 @@ let Entity = ({ match, location }) => {
 
   let Entity = entities[singular(match.params.entity)]
 
+  const renderEntity = () => (
+    records.map(record => (
+      <Card
+      key={record.id}
+      fontSize={3}
+      p={3}
+      my={2}
+      width={[ 1, 1, 2/3, 1/2 ]}
+      borderRadius={5}
+      boxShadow="0 2px 6px rgba(0, 0, 0, 0.20)"
+      >
+        <Entity {...record}/>
+      </Card> ))
+  );
+
   return loading || !Entity
     ? 'loading'
-    : records.map(record => (
-        <Card
-          key={record.id}
-          fontSize={3}
-          fontWeight="bold"
-          width={[1, 1, 1 / 2]}
-          p={5}
-          my={5}
-          borderRadius={8}
-          boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)"
-        >
-          <Entity {...record} />
-        </Card>
-      ))
+    : (
+      <Fade bottom >
+        <Flex 
+        alignItems="center"
+        flexDirection="column"
+        mt={5}>
+          {renderEntity()}
+        </Flex>
+      </Fade>
+  )
 }
 
 export default Entity
