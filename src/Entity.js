@@ -24,6 +24,7 @@ let Entity = ({ match, location }) => {
           if(records){
             setRecords(records)
             setLoading(false)
+            console.log(records)
           } else {
             console.log(error.type);
           }
