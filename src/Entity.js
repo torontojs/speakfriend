@@ -6,6 +6,7 @@ import { singular } from 'pluralize'
 import { BASE_URL, WORKSPACE, API_KEY } from './constants'
 import { parseJSON } from './utils'
 import * as entities from './entities'
+import SortBar from './components/SortBar';
 
 let Entity = ({ match, location }) => {
   let [records, setRecords] = useState([])
@@ -24,7 +25,6 @@ let Entity = ({ match, location }) => {
           if(records){
             setRecords(records)
             setLoading(false)
-            console.log(records)
           } else {
             console.log(error.type);
           }
@@ -58,6 +58,7 @@ let Entity = ({ match, location }) => {
         alignItems="center"
         flexDirection="column"
         mt={5}>
+          <SortBar />
           {renderEntity()}
         </Flex>
       </Fade>
