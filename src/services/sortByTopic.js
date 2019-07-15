@@ -7,14 +7,15 @@ export default (sortBy, arr) => {
         topicsA = regex.test(topicsA.toLowerCase());
         topicsB = regex.test(topicsB.toLowerCase());
 
-        if(topicsA && topicsB) {
-            return 0;
-        } else if ( topicsA && !topicsB){
+        if ( topicsA && !topicsB){
             return -1;
-        } else if ( topicsB && !topicsA){
+        } 
+        if ( topicsB && !topicsA){
             return 1;
         }
+
+        return 0;
     })
 
-    return arr;
+    return [...arr];
 }
