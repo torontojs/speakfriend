@@ -4,8 +4,9 @@ export default {
   colors: {
     primary: '#c43527',
     secondary: '#555',
+    greyLight0:'#f4f5f5',
     greyLight:'#eee',
-    greyLight2:'#ccc'
+    greyLight2:'#ccc',
   },
   space: [0, 4, 8, 16, 32, 64, 128, 256],
   fonts: {
