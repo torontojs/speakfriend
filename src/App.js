@@ -16,8 +16,8 @@ export default () => (
         <Nav />
         <Box p="24px">
           <Route path="/:entity" component={Entity} />
+          <Route path="/speaker/submit" component={SpeakerForm} />
         </Box>
-        <SpeakerForm />
       </>
     </ThemeProvider>
   </BrowserRouter>

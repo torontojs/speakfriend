@@ -20,6 +20,9 @@ let Entity = ({ match, location }) => {
       })
         .then(parseJSON)
         .then(({ records }) => {
+          if (records === undefined) {
+            throw Error
+          }
           setRecords(records)
           setLoading(false)
         })

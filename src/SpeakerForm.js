@@ -1,6 +1,6 @@
-import React from 'react';
+import React from 'react'
 
-class SpeakerForm extends React.component {
+class SpeakerForm extends React.Component {
   render() {
     return (
       <form action="">
@@ -41,4 +41,4 @@ class SpeakerForm extends React.component {
   }
 }
 
-export default SpeakerForm;
+export default SpeakerForm
