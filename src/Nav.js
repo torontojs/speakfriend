@@ -15,13 +15,8 @@ export default () => (
   <Flex justifyContent="center">
     <Fade bottom>
       <Box p="8px">
-        <Route>
-          {({ location }) => (
-            <Link className={location.pathname} to="speakers">
-              speakers
-            </Link>
-          )}
-        </Route>
+
+          <Link to="/speaker/submit">speakers</Link>
       </Box>
       <Box p="8px">
         <Link to="talks">talks</Link>
@@ -35,3 +30,5 @@ export default () => (
     </Fade>
   </Flex>
 )
+
+// 
