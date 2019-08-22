@@ -17,20 +17,20 @@ export default () => (
       <Box p="8px">
         <Route>
           {({ location }) => (
-            <Link className={location.pathname} to="speakers">
+            <Link className={location.pathname} to="/speakers">
               speakers
             </Link>
           )}
         </Route>
       </Box>
       <Box p="8px">
-        <Link to="talks">talks</Link>
+        <Link to="/talks">talks</Link>
       </Box>
       <Box p="8px">
-        <Link to="events">events</Link>
+        <Link to="/events">events</Link>
       </Box>
       <Box p="8px">
-        <Link to="submit">submit talk</Link>
+        <Link to="/submit">submit talk</Link>
       </Box>
     </Fade>
   </Flex>
