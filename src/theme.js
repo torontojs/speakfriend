@@ -7,6 +7,7 @@ export default {
     greyLight0:'#f4f5f5',
     greyLight:'#eee',
     greyLight2:'#ccc',
+    greyDark:'#777',
   },
   space: [0, 4, 8, 16, 32, 64, 128, 256],
   fonts: {

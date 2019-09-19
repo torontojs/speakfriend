@@ -29,7 +29,7 @@ export default ({searchTopic} ) => {
 
     return (
         <Flex width={[ 1, 1, 2/3, 1/2 ]} mb={3} pl={[0, 3]} justifyContent="space-between">
-            <Link to="" >become speaker</Link>
+            <Link to="submit/talk" >become speaker</Link>
             <SearchInput searchTopic={searchTopic} placeholder="search topic" />
         </Flex>
       );

@@ -7,7 +7,7 @@ import { BASE_URL, WORKSPACE, API_KEY } from './constants'
 import { parseJSON } from './utils'
 import * as entities from './entities'
 import SpeakerBar from './components/SpeakerBar';
-import SortByTopic from './services/SortByTopic'
+import SortByTopic from './services/sortByTopic'
 
 let Entity = ({ match, location }) => {
   let [records, setRecords] = useState([])

@@ -6,7 +6,8 @@ import theme from './theme'
 import Header from './Header'
 import Nav from './Nav'
 import Entity from './Entity'
-import SpeakerForm from './SpeakerForm';
+import SubmitTalk from './SubmitTalk'
+
 
 export default () => (
   <BrowserRouter>
@@ -15,8 +16,9 @@ export default () => (
         <Header />
         <Nav />
         <Box p="24px">
-          <Route path="/:entity" component={Entity} />
-          <Route path="/speaker/submit" component={SpeakerForm} />
+          <Route path="/submit/talk" component={SubmitTalk} />
+          <Route exact path="/:entity" component={Entity} />
+         
         </Box>
       </>
     </ThemeProvider>
