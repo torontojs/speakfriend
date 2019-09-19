@@ -1,27 +1,17 @@
 import React, { useCallback, useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes }  from 'styled-components';
 import { Flex, Button as UnstiledButton, Box } from 'rebass'
 import { useDropzone } from 'react-dropzone';
 import clearCloudinary from '../services/clearCloudinary';
 import sendToCloudinary from '../services/sendToCloudinary';
 
-const Figure = styled.figure`
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 540px;
-    height: 140px;
-    margin:0;
-    border-radius: 5px;
-`
 const Div = styled.div`
   display:flex;
   flex-direction: column;
   font-family: inherit;
   font-size: 16px;
   color:${props => props.theme.colors.greyDark};
-  padding: 20px 10px;
+  padding: 14px 10px;
   border: 2px dashed ${props => props.theme.colors.greyLight};
   cursor: pointer;
   width: 90%;
@@ -33,6 +23,13 @@ const Div = styled.div`
   @media screen and (min-width:  ${props => props.theme.breakpoints[2]}) {
     width: 85%; 
 }
+`
+
+const DivFile = styled.div`
+  font-family: inherit;
+  font-size: 16px;
+  color:${props => props.theme.colors.greyDark};
+
 `
 const Danger = styled.div`
   font-family: inherit;
@@ -61,7 +58,8 @@ let Button = styled(UnstiledButton)`
         border-color: ${props => props.theme.colors.greyLight};
     `
 
-export default ({setImageState, imageUrl, deleteToken}) => {
+export default ({setFileState, fileUrl, deleteToken}) => {
+  let [fileName, setFileName] = useState("");
   let [uploading, setUploading] = useState(false);
 
   const maxSize = 8388608; //max 8MB 
@@ -71,11 +69,12 @@ export default ({setImageState, imageUrl, deleteToken}) => {
 
     if(file){
         setUploading(true);
-        const res = await sendToCloudinary(file, file.name, true);
+        const res = await sendToCloudinary(file, file.name);
         setUploading(false);
     
         if (res.secure_url !== '' && res.secure_url !== undefined ) {
-            setImageState(res.secure_url, res.delete_token);
+            setFileState(res.secure_url, res.delete_token);
+            setFileName(file.name);
         }
     }
   }, []);
@@ -84,42 +83,45 @@ export default ({setImageState, imageUrl, deleteToken}) => {
     const res = await clearCloudinary(deleteToken);
 
     if(res.statusText === "OK") {
-        setImageState(null, null);
+        setFileState(null, null);
     }
   }
 
-  const { isDragActive, getRootProps, getInputProps, isDragReject, rejectedFiles } = useDropzone({
+   const { isDragActive, getRootProps, getInputProps, isDragReject, rejectedFiles} = useDropzone({
     onDrop,
-    accept: 'image/*',
+    accept: '*', // TO DO - List only acceptable MIME types
     multiple: false,
     minSize: 0,
     maxSize,
-  }); 
+  });  
 
 
   const isFileTooLarge = rejectedFiles.length > 0 && rejectedFiles[0].size > maxSize;
   
   return (
     <div>
-      {imageUrl === '' ? 
+      {fileUrl === '' ? 
         <Div {...getRootProps()}>
           <input {...getInputProps()} />
-          {!isDragActive && !imageUrl && 'Click here or drop a file to upload!'}
+          {!isDragActive && !fileUrl && !uploading &&(<div>
+                                                        Click here or drop a file to upload!
+                                                        <div> (doc, pdf, ppt, video, rar up to 8MB)</div>
+                                                      </div>)}
           {uploading && ( <Loader> </Loader>)}
           {isDragActive && !isDragReject && "Drop the file here ..."}
           {isDragReject && "File type not accepted, sorry!"}
           {isFileTooLarge && (
             <Danger>
-              File is too large, please select less the 8MB image!
+              File is too large, please select less the 8MB file!
             </Danger>
           )}
-        </Div> :
+        </Div>
+      :
 
-        <Flex alignItems="flex-end" >
-          <Figure>
-            <img src= {imageUrl} height='140px' alt="" />
-          </Figure> 
- 
+        <Flex alignItems="center" >
+          <DivFile>
+            {fileName}
+          </DivFile> 
           <Box pl={4}>
             <Button variant='outline' type="button" onClick={onDelete}>remove </Button>
           </Box>
@@ -128,5 +130,4 @@ export default ({setImageState, imageUrl, deleteToken}) => {
     </div>
   );
 };
-
 

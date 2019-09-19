@@ -30,7 +30,7 @@ export default () => (
         <Link to="/events">events</Link>
       </Box>
       <Box p="8px">
-        <Link to="/submit">submit talk</Link>
+        <Link to="/submit/talk">submit talk</Link>
       </Box>
     </Fade>
   </Flex>

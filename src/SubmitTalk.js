@@ -2,6 +2,7 @@ import React from 'react'
 import { Card, Flex, Box, Text, Button as UnstiledButton} from 'rebass'
 import Fade from 'react-reveal/Fade'
 import styled from 'styled-components'
+import FileUploader from './components/FileUploader'
 import PhotoUploader from './components/PhotoUploader'
 import createAirtableRecord from './services/createAirtableRecord'
 import clearCloudinary from './services/clearCloudinary'
@@ -56,8 +57,12 @@ class SubmitSpeaker extends React.Component {
             email: "",
             phone: "",
             topics: "",
-            imageUrl: "",
-            delete_token: "",
+            talk: "",
+            links: "",
+            fileUrl: "",
+            photoUrl: "",
+            delete_token_file: "",
+            delete_token_photo: "",
             validated: false
         };
     }
@@ -91,7 +96,14 @@ class SubmitSpeaker extends React.Component {
                 Phone: this.state.phone ? this.state.phone : "",
                 Picture: [
                     {
-                        url: this.state.imageUrl
+                        url: this.state.photoUrl
+                    }
+                ],
+                Talk: this.state.talk ? this.state.talk : "",
+                Links: this.state.links ? this.state.links : "",
+                Presentation: [
+                    {
+                        url: this.state.fileUrl
                     }
                 ]
             },
@@ -101,18 +113,27 @@ class SubmitSpeaker extends React.Component {
         const res = await createAirtableRecord(table, data);
 
         if(res.createdTime){
-            if(this.state.delete_token){
-                await clearCloudinary(this.state.delete_token);
+            if(this.state.delete_token_photo){
+                await clearCloudinary(this.state.delete_token_photo);
+            }
+            if(this.state.delete_token_file){
+                await clearCloudinary(this.state.delete_token_file);
             }
             
-            this.setImageState(null, null);
+            this.setFileState(null, null);
+            this.setPhotoState(null, null);
             history.push('/speakers');
         }
     }
 
-    setImageState = (url, delete_token) => {
-        url ? this.setState({ imageUrl: url }) : this.setState({ imageUrl: '' });
-        delete_token ? this.setState({ delete_token }) : this.setState({ delete_token: '' });
+    setFileState = (url, delete_token) => {
+        url ? this.setState({ fileUrl: url }) : this.setState({ fileUrl: '' });
+        delete_token ? this.setState({ delete_token_file: delete_token }) : this.setState({ delete_token_file: '' });
+    }
+
+    setPhotoState = (url, delete_token) => {
+        url ? this.setState({ photoUrl: url }) : this.setState({ photoUrl: '' });
+        delete_token ? this.setState({ delete_token_photo: delete_token }) : this.setState({ delete_token_photo: '' });
     }
 
     render() {
@@ -134,7 +155,7 @@ class SubmitSpeaker extends React.Component {
                 mt={3}
                 mb={3}
                 color='primary'>
-                    become a speaker
+                   submit talk
                 </Text>
                 <Text
                 fontSize={[ 2, 2, 2 ]}
@@ -156,7 +177,7 @@ class SubmitSpeaker extends React.Component {
                             </Input>
                             <Input name="email" type="text" 
                                 value={this.state.email} onChange={this.handleInputChange}
-                                placeholder="Your email  (required)">
+                                placeholder="Your email (required)">
                             </Input>
                             <Input name="phone" type="text" 
                                 value={this.state.phone} onChange={this.handleInputChange}
@@ -169,20 +190,41 @@ class SubmitSpeaker extends React.Component {
                                 value={this.state.topics} onChange={this.handleInputChange}
                                 placeholder="Topics - comma separated (required)">
                             </Input>
+                            <TextCard color="greyDark" fontWeight={600} mb={3} mt={2} >
+                                profile picture (optional)
+                            </TextCard>
+                            <PhotoUploader setImageState={this.setPhotoState}
+                                imageUrl={this.state.photoUrl}
+                                deleteToken={this.state.delete_token_photo} />
                         </Box>
                         <Box
                             p={3}
                             width={[1, 3/4, 1/2]}>
-                            <TextCard color="greyDark" fontWeight={600} mb={3} >
-                                speaker picture
+                            <TextCard color="greyDark" fontWeight={600} mb={2} >
+                               talk subject (required)
                             </TextCard>
-                            <PhotoUploader setImageState={this.setImageState}
-                                imageUrl={this.state.imageUrl}
-                                deleteToken={this.state.delete_token} />
+                            <Input name="talk" type="text" 
+                                value={this.state.talk} onChange={this.handleInputChange}
+                                placeholder="Headline of the speach">
+                            </Input>
+                            <TextCard color="greyDark" fontWeight={600} mb={3} mt={2} >
+                                presantation (optional)
+                            </TextCard>
+                            <FileUploader setFileState={this.setFileState}
+                                fileUrl={this.state.fileUrl}
+                                deleteToken={this.state.delete_token_file} />
+                            <TextCard color="greyDark" fontWeight={600} mb={2} mt={3} >
+                               links (optional)
+                            </TextCard>
+                            <Input name="links" type="text" 
+                                value={this.state.links} onChange={this.handleInputChange}
+                                placeholder="blogs, videos, repos, etc.">
+                            </Input>
+
                         </Box>
                     </FlexCard>
                     <Flex pl={3} mt={3} mb={3} mr={[3,4]} justifyContent="flex-end">
-                        <Button type="submit"  variant='outline' disabled={!this.state.validated} >submit speaker</Button>
+                        <Button type="submit"  variant='outline' disabled={!this.state.validated} >submit talk</Button>
                     </Flex>
                 </form>   
             </Card>
@@ -192,4 +234,3 @@ class SubmitSpeaker extends React.Component {
     }
 }
 export default SubmitSpeaker;
-

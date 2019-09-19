@@ -6,7 +6,7 @@ import theme from './theme'
 import Header from './Header'
 import Nav from './Nav'
 import Entity from './Entity'
-import SubmitSpeaker from './SubmitSpeaker'
+import SubmitTalk from './SubmitTalk'
 
 
 export default () => (
@@ -16,7 +16,7 @@ export default () => (
         <Header />
         <Nav />
         <Box p="24px">
-          <Route path="/speaker/submit" component={SubmitSpeaker} />
+          <Route path="/submit/talk" component={SubmitTalk} />
           <Route exact path="/:entity" component={Entity} />
          
         </Box>
