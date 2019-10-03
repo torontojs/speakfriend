@@ -35,7 +35,7 @@ let Entity = ({ match, location }) => {
   )
 
   const searchTopic = (topic) => {
-    const arr = SortByTopic(topic, records);
+    const arr = sortByTopic(topic, records);
     setRecords(arr);
   }
 
