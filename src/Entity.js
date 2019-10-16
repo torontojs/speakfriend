@@ -22,60 +22,60 @@ let Entity = ({ match, location }) => {
         },
       })
         .then(parseJSON)
-        .then(({ records , error}) => {
-          if(records){
+        .then(({ records, error }) => {
+          if (records) {
             setRecords(records)
             setLoading(false)
           } else {
-            console.log(error.type);
+            console.log(error.type)
+            setLoading(false)
           }
         })
     },
-    [location.pathname],
+    [location.pathname, match.params.entity],
   )
 
-  const searchTopic = (topic) => {
-    const arr = SortByTopic(topic, records);
-    setRecords(arr);
+  const searchTopic = topic => {
+    const arr = SortByTopic(topic, records)
+    setRecords(arr)
   }
 
   let Entity = entities[singular(match.params.entity)]
 
   const renderBar = () => {
-    const entity = singular(match.params.entity);
-    if(entity === "speaker"){
-      return  <SpeakerBar searchTopic={searchTopic} />
+    const entity = singular(match.params.entity)
+    if (entity === 'speaker') {
+      return <SpeakerBar searchTopic={searchTopic} />
     }
     return
   }
 
-  const renderEntity = () => (
+  const renderEntity = () =>
     records.map(record => (
       <Card
-      key={record.id}
-      fontSize={3}
-      p={3}
-      my={2}
-      width={[ 1, 1, 2/3, 1/2 ]}
-      borderRadius={5}
-      boxShadow="0 2px 6px rgba(0, 0, 0, 0.20)"
+        key={record.id}
+        fontSize={3}
+        p={3}
+        my={2}
+        width={[1, 1, 2 / 3, 1 / 2]}
+        borderRadius={5}
+        boxShadow="0 2px 6px rgba(0, 0, 0, 0.20)"
       >
-        <Entity {...record}/>
-      </Card> ))
-  );
+        <Entity {...record} />
+      </Card>
+    ))
 
-  return loading || !Entity
-    ? 'loading'
-    : (
-      <Fade bottom >
-        <Flex
-        alignItems="center"
-        flexDirection="column"
-        mt={[4, 5]}>
-          {renderBar()}
-          {renderEntity()}
-        </Flex>
-      </Fade>
+  if (!Entity) return false
+
+  if (loading) return 'loading'
+
+  return (
+    <Fade bottom>
+      <Flex alignItems="center" flexDirection="column" mt={[4, 5]}>
+        {renderBar()}
+        {renderEntity()}
+      </Flex>
+    </Fade>
   )
 }
 
