@@ -28,6 +28,7 @@ let Entity = ({ match, location }) => {
             setLoading(false)
           } else {
             console.log(error.type)
+            setLoading(false)
           }
         })
     },
@@ -64,9 +65,11 @@ let Entity = ({ match, location }) => {
       </Card>
     ))
 
-  return loading || !Entity ? (
-    'loading'
-  ) : (
+  if (!Entity) return false
+
+  if (loading) return 'loading'
+
+  return (
     <Fade bottom>
       <Flex alignItems="center" flexDirection="column" mt={[4, 5]}>
         {renderBar()}
