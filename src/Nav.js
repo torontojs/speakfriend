@@ -15,8 +15,7 @@ export default () => (
   <Flex justifyContent="center">
     <Fade bottom>
       <Box p="8px">
-
-          <Link to="/speaker/submit">speakers</Link>
+          <Link to="/submittalk">submit a talk</Link>
       </Box>
       <Box p="8px">
         <Link to="talks">talks</Link>
@@ -25,10 +24,8 @@ export default () => (
         <Link to="events">events</Link>
       </Box>
       <Box p="8px">
-        <Link to="submit">submit talk</Link>
+        <Link to="/submitevent">submit an event</Link>
       </Box>
     </Fade>
   </Flex>
 )
-
-// 

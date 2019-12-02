@@ -43,7 +43,7 @@ let Entity = ({ match, location }) => {
 
   const renderBar = () => {
     const entity = singular(match.params.entity);
-    if(entity === "speaker"){
+    if(entity === "talk"){
       return  <SpeakerBar searchTopic={searchTopic} />
     }
     return
