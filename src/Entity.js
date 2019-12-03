@@ -65,7 +65,8 @@ let Entity = ({ match, location }) => {
   );
 
   return loading || !Entity
-    ? 'loading'
+  // leaving loading as a blank string for now until I work out how to return null for when the user is on speakerform or eventform 
+    ? '' // 'loading
     : (
       <Fade bottom >
         <Flex

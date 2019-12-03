@@ -1,6 +1,6 @@
 import React from 'react'
 import { ThemeProvider } from 'styled-components'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
 import { Box } from 'rebass'
 import theme from './theme'
 import Header from './Header'
@@ -16,10 +16,9 @@ export default () => (
         <Header />
         <Nav />
         <Box p="24px">
-          <Route path="/:entity" component={Entity} />
           <Route path="/submittalk" component={SpeakerForm} />
           <Route path="/submitevent" component={EventForm}/>
-          <Route/>
+          <Route exact path="/:entity" component={Entity} />
         </Box>
       </>
     </ThemeProvider>

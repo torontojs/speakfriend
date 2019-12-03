@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import StyledButton from './components/StyledButton';
 
 class EventForm extends React.Component {
   render() {
@@ -35,7 +36,7 @@ class EventForm extends React.Component {
             <input type="textarea" name="bio"/>
           </label>
         </div>
-
+        <StyledButton text="Submit Event"/>
       </form>
     )
   }
