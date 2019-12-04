@@ -1,17 +1,41 @@
+import Airtable from 'airtable';
 import React, { useState } from 'react'
+import { API_KEY, WORKSPACE } from './constants';
 import StyledButton from './components/StyledButton'
 
 const SpeakerForm = () => {
 
+    var base = new Airtable({apiKey: API_KEY}).base(WORKSPACE);
 
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [description, setDescription] = useState("")
     const [topics, setTopics] = useState("")
     
+    const createTalk = (event) => {
+      event.preventDefault();
+      base('talks').create([
+        {
+          "fields": {
+            "Speaker": name,
+            "Description": description,
+            "Topics": topics,
+            "Email": email
+          }
+        }
+      ], function(err, records) {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        records.forEach(function (record) {
+          console.log(record.getId());
+        });
+      });
+    }
 
     return (
-      <form action="">
+      <form onSubmit={createTalk}>
         <div className="formRow">
           <label>
             Name
