@@ -32,7 +32,11 @@ const SpeakerForm = () => {
           return
         }
         records.forEach(function(record) {
-          console.log(record.getId())
+          setName('')
+          setTalk('')
+          setEmail('')
+          setDescription('')
+          setTopics('')
         })
       },
     )
