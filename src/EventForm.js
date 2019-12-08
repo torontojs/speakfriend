@@ -1,45 +1,72 @@
-import React from 'react';
-import StyledButton from './components/StyledButton';
+import Airtable from 'airtable'
+import { API_KEY, WORKSPACE } from './constants'
+import DateTimePicker from 'react-datetime-picker'
+import React, { useState } from 'react'
+import StyledButton from './components/StyledButton'
 
-class EventForm extends React.Component {
-  render() {
-    return (
-      <form action="">
-        <div className="formRow"></div>
-        <div className="formRow">
-          <label>
-            First Name
-            <input type="text" name="firstName"/>
-          </label>
-        </div>
-        <div className="formRow">
-          <label>
-            Last Name
-            <input type="text" name="lastName"/>
-          </label>
-        </div>
-        <div className="formRow">
-          <label>
-            Job Title
-            <input type="text" name="jobTitle"/>
-          </label>
-        </div>
-        <div className="formRow">
-          <label>
-            Email Address
-            <input type="email" name="emailAddress"/>
-          </label>
-        </div>
-        <div className="formRow">
-          <label>
-            Bio
-            <input type="textarea" name="bio"/>
-          </label>
-        </div>
-        <StyledButton text="Submit Event"/>
-      </form>
-    )
+const EventForm = () => {
+  const [eventName, setEventName] = useState('')
+  const [email, setEmail] = useState('')
+  const [organization, setOrganization] = useState('')
+  const [date, setDate] = useState(new Date())
+  const createEvent = event => {}
+
+  const dateChange = date => {
+    console.log(date)
   }
+
+  return (
+    <form onSubmit={createEvent}>
+      <div className="formRow">
+        <label>
+          Event Name
+          <input
+            type="text"
+            name="event"
+            required
+            value={eventName}
+            onChange={e => setEventName(e.target.value)}
+          />
+        </label>
+      </div>
+      <div className="formRow">
+        <label>
+          Organization
+          <input
+            type="text"
+            name="organization"
+            required
+            value={organization}
+            onChange={e => setOrganization(e.target.value)}
+          />
+        </label>
+      </div>
+      <div className="formRow">
+        <label>
+          Date
+          <DateTimePicker
+            value={date}
+            onChange={date => setDate(date)}
+            disableCalendar={true}
+            disableClock={true}
+            required
+          />
+        </label>
+      </div>
+      <div className="formRow">
+        <label>
+          Email Address
+          <input
+            type="email"
+            name="emailAddress"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+          />
+        </label>
+      </div>
+      <StyledButton text="Submit Event" />
+    </form>
+  )
 }
 
 export default EventForm
