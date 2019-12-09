@@ -31,13 +31,11 @@ const SpeakerForm = () => {
           console.error(err)
           return
         }
-        records.forEach(function(record) {
-          setName('')
-          setTalk('')
-          setEmail('')
-          setDescription('')
-          setTopics('')
-        })
+        setName('')
+        setTalk('')
+        setEmail('')
+        setDescription('')
+        setTopics('')
       },
     )
   }

@@ -5,14 +5,47 @@ import React, { useState } from 'react'
 import StyledButton from './components/StyledButton'
 
 const EventForm = () => {
+  var base = new Airtable({ apiKey: API_KEY }).base(WORKSPACE)
+
   const [eventName, setEventName] = useState('')
   const [email, setEmail] = useState('')
+  const [description, setDescription] = useState('')
   const [organization, setOrganization] = useState('')
   const [date, setDate] = useState(new Date())
-  const createEvent = event => {}
+  const [location, setLocation] = useState('')
 
-  const dateChange = date => {
-    console.log(date)
+  const createEvent = event => {
+    event.preventDefault()
+
+    const day = date.toDateString()
+    const time = date.toString().slice(16, 21)
+
+    base('events').create(
+      [
+        {
+          fields: {
+            Event: eventName,
+            Description: description,
+            Email: email,
+            Location: location,
+            Organization: organization,
+            Date: `${day}-${time}`,
+          },
+        },
+      ],
+      function(err, records) {
+        if (err) {
+          console.error(err)
+          return
+        }
+        setEmail('')
+        setOrganization('')
+        setEventName('')
+        setDescription('')
+        setDate(new Date())
+        setLocation('')
+      },
+    )
   }
 
   return (
@@ -43,6 +76,18 @@ const EventForm = () => {
       </div>
       <div className="formRow">
         <label>
+          Description of your event
+          <input
+            type="textarea"
+            name="description"
+            value={description}
+            required
+            onChange={e => setDescription(e.target.value)}
+          />
+        </label>
+      </div>
+      <div className="formRow">
+        <label>
           Date
           <DateTimePicker
             value={date}
@@ -61,6 +106,18 @@ const EventForm = () => {
             name="emailAddress"
             value={email}
             onChange={e => setEmail(e.target.value)}
+          />
+        </label>
+      </div>
+      <div className="formRow">
+        <label>
+          Location
+          <input
+            type="text"
+            name="location"
+            required
+            value={location}
+            onChange={e => setLocation(e.target.value)}
           />
         </label>
       </div>
