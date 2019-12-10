@@ -1,13 +1,13 @@
-import React,{ useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 let Input = styled.input`
   font-family: inherit;
   font-size: 16px;
   color: inherit;
-  background-color: ${props => props.theme.colors.greyLight0}; 
+  background-color: ${props => props.theme.colors.greyLight0};
   border: none;
-  padding: 4px 12px 6px 38px ;
+  padding: 4px 12px 6px 38px;
   margin-left: -36px;
   border-radius: 100px;
   outline: none;
@@ -23,7 +23,7 @@ let Input = styled.input`
     font-weight: 400;
     color: ${props => props.theme.colors.greyLight2};
   }
-  @media screen and (max-width:  ${props => props.theme.breakpoints[0]}) {
+  @media screen and (max-width: ${props => props.theme.breakpoints[0]}) {
     width: 100%;
     &::-webkit-input-placeholder {
       text-align: center;
@@ -35,7 +35,7 @@ let Form = styled.form`
   align-items: center;
   justify-content: center;
   width: 170px;
-  @media screen and (max-width:  ${props => props.theme.breakpoints[0]}) {
+  @media screen and (max-width: ${props => props.theme.breakpoints[0]}) {
     width: 100%;
   }
 `
@@ -53,17 +53,12 @@ export default ({ searchTopic, placeholder }) => {
   let [sortWord, setSortWord] = useState('')
 
   const handleChange = event => {
+    searchTopic(event.target.value)
     setSortWord(event.target.value)
   }
 
-  const handleSubmit = event => {
-    event.preventDefault()
-    searchTopic(sortWord)
-    setSortWord('')
-  }
-
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form>
       <Label>
         <Svg>
           <use xlinkHref="svg/sprite.svg#icon-magnifying-glass"></use>
@@ -73,7 +68,8 @@ export default ({ searchTopic, placeholder }) => {
         type="text"
         value={sortWord}
         onChange={handleChange}
-        placeholder={placeholder}/>
+        placeholder={placeholder}
+      />
     </Form>
   )
 }

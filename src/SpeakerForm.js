@@ -1,44 +1,109 @@
-import React from 'react'
+import Airtable from 'airtable'
+import React, { useState } from 'react'
+import { API_KEY, WORKSPACE } from './constants'
+import StyledButton from './components/StyledButton'
 
-class SpeakerForm extends React.Component {
-  render() {
-    return (
-      <form action="">
-        <div className="formRow"></div>
-        <div className="formRow">
-          <label>
-            First Name
-            <input type="text" name="firstName"/>
-          </label>
-        </div>
-        <div className="formRow">
-          <label>
-            Last Name
-            <input type="text" name="lastName"/>
-          </label>
-        </div>
-        <div className="formRow">
-          <label>
-            Job Title
-            <input type="text" name="jobTitle"/>
-          </label>
-        </div>
-        <div className="formRow">
-          <label>
-            Email Address
-            <input type="email" name="emailAddress"/>
-          </label>
-        </div>
-        <div className="formRow">
-          <label>
-            Bio
-            <input type="textarea" name="bio"/>
-          </label>
-        </div>
+const SpeakerForm = () => {
+  var base = new Airtable({ apiKey: API_KEY }).base(WORKSPACE)
 
-      </form>
+  const [name, setName] = useState('')
+  const [talk, setTalk] = useState('')
+  const [email, setEmail] = useState('')
+  const [description, setDescription] = useState('')
+  const [topics, setTopics] = useState('')
+
+  const createTalk = event => {
+    event.preventDefault()
+    base('talks').create(
+      [
+        {
+          fields: {
+            Speaker: name,
+            Description: description,
+            Talk: talk,
+            Topics: topics,
+            Email: email,
+          },
+        },
+      ],
+      function(err, records) {
+        if (err) {
+          console.error(err)
+          return
+        }
+        setName('')
+        setTalk('')
+        setEmail('')
+        setDescription('')
+        setTopics('')
+      },
     )
   }
+
+  return (
+    <form onSubmit={createTalk}>
+      <div className="formRow">
+        <label>
+          Name
+          <input
+            type="text"
+            name="name"
+            value={name}
+            required
+            onChange={e => setName(e.target.value)}
+          />
+        </label>
+      </div>
+      <div className="formRow">
+        <label>
+          Talk Name
+          <input
+            type="text"
+            name="talk"
+            value={talk}
+            required
+            onChange={e => setTalk(e.target.value)}
+          />
+        </label>
+      </div>
+      <div className="formRow">
+        <label>
+          Email Address
+          <input
+            type="email"
+            name="emailAddress"
+            value={email}
+            required
+            onChange={e => setEmail(e.target.value)}
+          />
+        </label>
+      </div>
+      <div className="formRow">
+        <label>
+          Description of your talk
+          <input
+            type="textarea"
+            name="description"
+            value={description}
+            required
+            onChange={e => setDescription(e.target.value)}
+          />
+        </label>
+      </div>
+      <div className="formRow">
+        <label>
+          Topics (separate by comma)
+          <input
+            type="textarea"
+            value={topics}
+            name="topics"
+            onChange={e => setTopics(e.target.value)}
+          />
+        </label>
+      </div>
+      <StyledButton text="Submit Talk" />
+    </form>
+  )
 }
 
 export default SpeakerForm

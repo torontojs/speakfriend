@@ -1,21 +1,14 @@
 export default (sortBy, arr) => {
-    const regex = new RegExp(sortBy.toLowerCase());
-    arr.sort((a,b) => {
-        let topicsA = a.fields['Topics'] ? a.fields['Topics'] : "" ,
-            topicsB = b.fields['Topics'] ? b.fields['Topics'] : "" ;
+  let input = sortBy.trim().toLowerCase()
 
-        topicsA = regex.test(topicsA.toLowerCase());
-        topicsB = regex.test(topicsB.toLowerCase());
+  const newArr = arr.filter(entry => {
+    return (
+      entry['fields']['Topics']
+        .replace(/,/g, ' ')
+        .toLowerCase()
+        .indexOf(input) > -1
+    )
+  })
 
-        if ( topicsA && !topicsB){
-            return -1;
-        } 
-        if ( topicsB && !topicsA){
-            return 1;
-        }
-
-        return 0;
-    })
-
-    return [...arr];
+  return newArr
 }
