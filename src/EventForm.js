@@ -91,6 +91,7 @@ const EventForm = () => {
           Date
           <DateTimePicker
             value={date}
+            minDate={new Date()}
             onChange={date => setDate(date)}
             disableCalendar={true}
             disableClock={true}
