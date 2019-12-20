@@ -1,6 +1,7 @@
 import Airtable from 'airtable'
 import { API_KEY, WORKSPACE } from './constants'
 import DateTimePicker from 'react-datetime-picker'
+import detectDuplicate from './services/detectDuplicate'
 import React, { useState } from 'react'
 import StyledButton from './components/StyledButton'
 
@@ -13,43 +14,69 @@ const EventForm = () => {
   const [organization, setOrganization] = useState('')
   const [date, setDate] = useState(new Date())
   const [location, setLocation] = useState('')
+  const [duplicateFound, setDuplicateFound] = useState(false)
 
   const createEvent = event => {
     event.preventDefault()
 
     const day = date.toDateString()
     const time = date.toString().slice(16, 21)
+    let events = []
 
-    base('events').create(
-      [
-        {
-          fields: {
-            Event: eventName,
-            Description: description,
-            Email: email,
-            Location: location,
-            Organization: organization,
-            Date: `${day}-${time}`,
-          },
+    base('events')
+      .select({
+        fields: ['Event'],
+      })
+      .eachPage(
+        function page(records, fetchNextPage) {
+          records.forEach(function(record) {
+            events.push(record.fields['Event'])
+          })
+          fetchNextPage()
         },
-      ],
-      function(err, records) {
-        if (err) {
-          console.error(err)
-          return
-        }
-        setEmail('')
-        setOrganization('')
-        setEventName('')
-        setDescription('')
-        setDate(new Date())
-        setLocation('')
-      },
-    )
+        function done(err) {
+          if (detectDuplicate(events, eventName)) {
+            setDuplicateFound(true)
+            return
+          }
+          // if no duplicate create the event
+          base('events').create(
+            [
+              {
+                fields: {
+                  Event: eventName,
+                  Description: description,
+                  Email: email,
+                  Location: location,
+                  Organization: organization,
+                  Date: `${day}-${time}`,
+                },
+              },
+            ],
+            function(err, records) {
+              if (err) {
+                console.error(err)
+                return
+              }
+              setEmail('')
+              setOrganization('')
+              setEventName('')
+              setDescription('')
+              setDate(new Date())
+              setLocation('')
+            },
+          )
+          if (err) {
+            console.error(err)
+            return
+          }
+        },
+      )
   }
 
   return (
     <form onSubmit={createEvent}>
+      {duplicateFound ? <p>Event already exists</p> : null}
       <div className="formRow">
         <label>
           Event Name
@@ -91,7 +118,6 @@ const EventForm = () => {
           Date
           <DateTimePicker
             value={date}
-            minDate={new Date()}
             onChange={date => setDate(date)}
             disableCalendar={true}
             disableClock={true}
