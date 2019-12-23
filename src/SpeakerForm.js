@@ -1,8 +1,12 @@
 import Airtable from 'airtable'
+import { Flex, Box } from 'rebass'
 import detectDuplicate from './services/detectDuplicate'
 import React, { useState } from 'react'
+import Fade from 'react-reveal/Fade'
 import { API_KEY, WORKSPACE } from './constants'
 import StyledButton from './components/StyledButton'
+import StyledTextArea from './components/StyledTextArea'
+import StyledTextInput from './components/StyledTextInput'
 
 const SpeakerForm = () => {
   var base = new Airtable({ apiKey: API_KEY }).base(WORKSPACE)
@@ -69,69 +73,50 @@ const SpeakerForm = () => {
   }
 
   return (
-    <form onSubmit={createTalk}>
-      {duplicateFound ? <p>Talk already exists</p> : null}
-      <div className="formRow">
-        <label>
-          Name
-          <input
+    <Fade bottom>
+      <Flex justifyContent="center" alignItems="center">
+        <Box
+          as="form"
+          onSubmit={createTalk}
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+        >
+          {duplicateFound ? <p>Talk already exists</p> : null}
+          <StyledTextInput
             type="text"
-            name="name"
             value={name}
-            required
-            onChange={e => setName(e.target.value)}
+            updateValue={setName}
+            labelText="your name"
           />
-        </label>
-      </div>
-      <div className="formRow">
-        <label>
-          Talk Name
-          <input
+
+          <StyledTextInput
             type="text"
-            name="talk"
             value={talk}
             required
-            onChange={e => setTalk(e.target.value)}
+            updateValue={setTalk}
+            labelText="your talk"
           />
-        </label>
-      </div>
-      <div className="formRow">
-        <label>
-          Email Address
-          <input
+          <StyledTextInput
             type="email"
-            name="emailAddress"
             value={email}
-            required
-            onChange={e => setEmail(e.target.value)}
+            updateValue={setEmail}
+            labelText="your email"
           />
-        </label>
-      </div>
-      <div className="formRow">
-        <label>
-          Description of your talk
-          <input
-            type="textarea"
-            name="description"
+          <StyledTextArea
             value={description}
-            required
-            onChange={e => setDescription(e.target.value)}
+            updateValue={setDescription}
+            labelText="description"
           />
-        </label>
-      </div>
-      <div className="formRow">
-        <label>
-          Topics (separate by comma)
-          <input
-            type="textarea"
+          <StyledTextArea
             value={topics}
-            name="topics"
-            onChange={e => setTopics(e.target.value)}
+            updateValue={setTopics}
+            labelText="enter topics (separate by comma)"
           />
-        </label>
-      </div>
-      <StyledButton text="Submit Talk" />
-    </form>
+          <StyledButton text="Submit Talk" />
+        </Box>
+      </Flex>
+    </Fade>
   )
 }
 

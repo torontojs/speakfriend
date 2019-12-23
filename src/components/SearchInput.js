@@ -67,7 +67,7 @@ export default ({ searchTopic, placeholder }) => {
       <Input
         type="text"
         value={sortWord}
-        onChange={handleChange}
+        updateValue={handleChange}
         placeholder={placeholder}
       />
     </Form>
