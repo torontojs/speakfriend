@@ -68,6 +68,7 @@ const EventForm = () => {
               setDescription('')
               setDate(new Date())
               setLocation('')
+              setDuplicateFound(false)
             },
           )
           if (err) {
