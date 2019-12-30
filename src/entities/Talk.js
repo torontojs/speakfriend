@@ -23,10 +23,10 @@ export default ({ fields }) => {
         <Text fontSize={4} fontWeight="500">
           {`Talk: ${talk}`}
         </Text>
-        <Text fontSize={2} fontWeight="200" marginTop="3%">
+        <Text fontSize={2} fontWeight="200" marginTop="2%" paddingLeft="8%">
           {description}
         </Text>
-        <Flex py={2} mt={2} alignItems="center" marginTop="3%">
+        <Flex py={2} mt={2} alignItems="center" marginTop="2%" paddingLeft="8%">
           <Text fontSize={2} width={1 / 3}>
             Topics:
           </Text>
