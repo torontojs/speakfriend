@@ -13,7 +13,7 @@
     "react-reveal": "^1.2.2",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.5",
-    "rebass": "^3.0.0-9",
+    "rebass": "^3.2.2",
     "styled-components": "^4.0.2",
     "url-join": "^4.0.0"
   },
