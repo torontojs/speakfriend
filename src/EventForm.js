@@ -89,7 +89,7 @@ const EventForm = () => {
           alignItems="center"
           onSubmit={createEvent}
         >
-          {duplicateFound ? <p>Event already exists</p> : null}
+          {duplicateFound ? <p>An event by that name already exists</p> : null}
           <StyledTextInput
             type="text"
             labelText="event"

@@ -62,6 +62,7 @@ const SpeakerForm = () => {
               setEmail('')
               setDescription('')
               setTopics('')
+              setDuplicateFound(false)
             },
           )
           if (err) {
@@ -82,7 +83,7 @@ const SpeakerForm = () => {
           flexDirection="column"
           alignItems="center"
         >
-          {duplicateFound ? <p>Talk already exists</p> : null}
+          {duplicateFound ? <p>A talk by that name already exists</p> : null}
           <StyledTextInput
             type="text"
             value={name}
