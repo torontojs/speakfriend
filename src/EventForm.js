@@ -1,54 +1,59 @@
 import Airtable from 'airtable'
+import { API_KEY, WORKSPACE } from './constants'
 import { Flex, Box } from 'rebass'
+import DateInput from './components/DateInput'
+import Fade from 'react-reveal/Fade'
 import detectDuplicate from './services/detectDuplicate'
 import React, { useState } from 'react'
-import Fade from 'react-reveal/Fade'
-import { API_KEY, WORKSPACE } from './constants'
 import StyledButton from './components/StyledButton'
 import StyledTextArea from './components/StyledTextArea'
 import StyledTextInput from './components/StyledTextInput'
 
-const SpeakerForm = () => {
+const EventForm = () => {
   var base = new Airtable({ apiKey: API_KEY }).base(WORKSPACE)
 
-  const [name, setName] = useState('')
-  const [talk, setTalk] = useState('')
+  const [eventName, setEventName] = useState('')
   const [email, setEmail] = useState('')
   const [description, setDescription] = useState('')
-  const [topics, setTopics] = useState('')
+  const [organization, setOrganization] = useState('')
+  const [date, setDate] = useState(new Date())
+  const [location, setLocation] = useState('')
   const [duplicateFound, setDuplicateFound] = useState(false)
 
-  const createTalk = event => {
+  const createEvent = event => {
     event.preventDefault()
 
-    let talks = []
+    const day = date.toDateString()
+    const time = date.toString().slice(16, 21)
+    let events = []
 
-    base('talks')
+    base('events')
       .select({
-        fields: ['Talk'],
+        fields: ['Event'],
       })
       .eachPage(
         function page(records, fetchNextPage) {
           records.forEach(function(record) {
-            talks.push(record.fields['Talk'])
+            events.push(record.fields['Event'])
           })
           fetchNextPage()
         },
         function done(err) {
-          if (detectDuplicate(talks, talk)) {
+          if (detectDuplicate(events, eventName)) {
             setDuplicateFound(true)
             return
           }
           // if no duplicate create the event
-          base('talks').create(
+          base('events').create(
             [
               {
                 fields: {
-                  Speaker: name,
+                  Event: eventName,
                   Description: description,
-                  Talk: talk,
-                  Topics: topics,
                   Email: email,
+                  Location: location,
+                  Organization: organization,
+                  Date: `${day}-${time}`,
                 },
               },
             ],
@@ -57,11 +62,12 @@ const SpeakerForm = () => {
                 console.error(err)
                 return
               }
-              setName('')
-              setTalk('')
               setEmail('')
+              setOrganization('')
+              setEventName('')
               setDescription('')
-              setTopics('')
+              setDate(new Date())
+              setLocation('')
               setDuplicateFound(false)
             },
           )
@@ -78,47 +84,47 @@ const SpeakerForm = () => {
       <Flex justifyContent="center" alignItems="center">
         <Box
           as="form"
-          onSubmit={createTalk}
           display="flex"
           flexDirection="column"
           alignItems="center"
+          onSubmit={createEvent}
         >
-          {duplicateFound ? <p>A talk by that name already exists</p> : null}
+          {duplicateFound ? <p>An event by that name already exists</p> : null}
           <StyledTextInput
             type="text"
-            value={name}
-            updateValue={setName}
-            labelText="your name"
+            labelText="event"
+            value={eventName}
+            updateValue={setEventName}
           />
-
           <StyledTextInput
             type="text"
-            value={talk}
-            required
-            updateValue={setTalk}
-            labelText="your talk"
+            labelText="organization"
+            value={organization}
+            updateValue={setOrganization}
           />
           <StyledTextInput
             type="email"
             value={email}
+            labelText="email"
             updateValue={setEmail}
-            labelText="your email"
           />
+          <StyledTextInput
+            type="text"
+            value={location}
+            labelText="location"
+            updateValue={setLocation}
+          />
+          <DateInput value={date} updateValue={setDate} />
           <StyledTextArea
             value={description}
-            updateValue={setDescription}
             labelText="description"
+            updateValue={setDescription}
           />
-          <StyledTextArea
-            value={topics}
-            updateValue={setTopics}
-            labelText="enter topics (separate by comma)"
-          />
-          <StyledButton text="Submit Talk" />
+          <StyledButton text="Submit Event" />
         </Box>
       </Flex>
     </Fade>
   )
 }
 
-export default SpeakerForm
+export default EventForm
