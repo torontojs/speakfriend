@@ -27,7 +27,8 @@
   "scripts": {
     "ui": "react-scripts start",
     "lambda": "netlify-lambda serve src/lambdas",
-    "start": "react-scripts start"
+    "start": "react-scripts start",
+    "build": "react-scripts build"
   },
   "eslintConfig": {
     "extends": [
