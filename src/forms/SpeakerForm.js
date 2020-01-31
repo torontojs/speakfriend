@@ -1,12 +1,12 @@
 import Airtable from 'airtable'
 import { Flex, Box } from 'rebass'
-import detectDuplicate from './services/detectDuplicate'
+import detectDuplicate from '../services/detectDuplicate'
 import React, { useState } from 'react'
 import Fade from 'react-reveal/Fade'
-import { API_KEY, WORKSPACE } from './constants'
-import StyledButton from './components/StyledButton'
-import StyledTextArea from './components/StyledTextArea'
-import StyledTextInput from './components/StyledTextInput'
+import { API_KEY, WORKSPACE } from '../constants'
+import StyledButton from '../components/StyledButton'
+import StyledTextArea from '../components/StyledTextArea'
+import StyledTextInput from '../components/StyledTextInput'
 
 const SpeakerForm = () => {
   var base = new Airtable({ apiKey: API_KEY }).base(WORKSPACE)

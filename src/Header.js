@@ -38,16 +38,7 @@ export default () => (
         >
           Submit a talk and give event organizers from around the city the
           opportunity to reach out to you.
-        </Text>
-        <Text
-          fontSize={['10px', '16px']}
-          fontWeight={200}
-          color="#000"
-          letterSpacing={1}
-          marginLeft="15%"
-          marginRight="15%"
-          marginBottom="10px"
-        >
+          <br />
           If you're an event organizer, submit your event and let the talented
           speakers in our city find your next event.
         </Text>

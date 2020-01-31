@@ -6,8 +6,8 @@ import theme from './theme'
 import Header from './Header'
 import Nav from './Nav'
 // import Entity from './Entity'
-import EventForm from './EventForm'
-import SpeakerForm from './SpeakerForm'
+import EventForm from './forms/EventForm'
+import SpeakerForm from './forms/SpeakerForm'
 
 export default () => (
   <BrowserRouter>

@@ -1,13 +1,13 @@
 import Airtable from 'airtable'
-import { API_KEY, WORKSPACE } from './constants'
+import { API_KEY, WORKSPACE } from '../constants'
 import { Flex, Box } from 'rebass'
-import DateInput from './components/DateInput'
+import DateInput from '../components/DateInput'
 import Fade from 'react-reveal/Fade'
-import detectDuplicate from './services/detectDuplicate'
+import detectDuplicate from '../services/detectDuplicate'
 import React, { useState } from 'react'
-import StyledButton from './components/StyledButton'
-import StyledTextArea from './components/StyledTextArea'
-import StyledTextInput from './components/StyledTextInput'
+import StyledButton from '../components/StyledButton'
+import StyledTextArea from '../components/StyledTextArea'
+import StyledTextInput from '../components/StyledTextInput'
 
 const EventForm = () => {
   var base = new Airtable({ apiKey: API_KEY }).base(WORKSPACE)
