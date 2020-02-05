@@ -17,12 +17,12 @@ export default () => (
       <Box p="8px">
         <Link to="/submittalk">submit a talk</Link>
       </Box>
-      {/* <Box p="8px">
+      <Box p="8px">
         <Link to="talks">talks</Link>
-      </Box> */}
-      {/* <Box p="8px">
+      </Box>
+      <Box p="8px">
         <Link to="events">events</Link>
-      </Box> */}
+      </Box>
       <Box p="8px">
         <Link to="/submitevent">submit an event</Link>
       </Box>
