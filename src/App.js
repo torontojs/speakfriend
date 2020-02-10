@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { ThemeProvider } from 'styled-components'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Route, Redirect } from 'react-router-dom'
 import { Box } from 'rebass'
 import theme from './theme'
 import Header from './Header'
@@ -11,35 +11,35 @@ import EventForm from './forms/EventForm'
 import InviteByEmail from './forms/InviteByEmail'
 import SetPassword from './forms/SetPassword'
 import SpeakerForm from './forms/SpeakerForm'
+import { UserContext } from './context/UserContext'
 
 export default () => {
-  const [loggedIn, toggleLoggedIn] = useState(true)
+  const [loggedIn] = useContext(UserContext)
+
+  useEffect(() => {
+    if (!loggedIn) {
+    }
+  })
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <>
           <Box p="12px">
-            <Header showBlurb={loggedIn} />
-            {loggedIn ? <Nav /> : null}
+            <Header />
+            <Nav />
+            <Route exact path="/">
+              {loggedIn ? (
+                <Redirect to="/talks" />
+              ) : (
+                <Redirect to="/submittalk" />
+              )}
+            </Route>
             <Route path="/submittalk" component={SpeakerForm} />
             <Route path="/submitevent" component={EventForm} />
             <Route exact path="/:entity" component={Entity} />
-            <Route
-              path="/login"
-              render={props => <LogIn {...props} loggedIn={toggleLoggedIn} />}
-            />
-            <Route
-              path="/invite"
-              render={props => (
-                <InviteByEmail {...props} loggedIn={toggleLoggedIn} />
-              )}
-            />
-            <Route
-              path="/setpassword"
-              render={props => (
-                <SetPassword {...props} loggedIn={toggleLoggedIn} />
-              )}
-            />
+            <Route path="/login" component={LogIn} />
+            <Route path="/invite" component={InviteByEmail} />
+            <Route path="/setpassword" component={SetPassword} />
           </Box>
         </>
       </ThemeProvider>

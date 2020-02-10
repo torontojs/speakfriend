@@ -9,6 +9,8 @@ import * as entities from './entities'
 import SpeakerBar from './components/SpeakerBar'
 import SortByTopic from './services/sortByTopic'
 
+// if a user is not logged in do not show Entity
+
 let Entity = ({ match, location }) => {
   let [allRecords, setAllRecords] = useState([])
   let [records, setRecords] = useState([])

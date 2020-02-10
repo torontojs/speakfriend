@@ -1,19 +1,21 @@
 import Fade from 'react-reveal/Fade'
 import { Flex, Box } from 'rebass'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import StyledButton from '../components/StyledButton'
 import StyledTextInput from '../components/StyledTextInput'
+import { UserContext } from '../context/UserContext'
 
-const LogIn = ({ loggedIn }) => {
+const LogIn = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
-  useEffect(() => {
-    loggedIn(false)
-  }, [])
+  const [toggleLoggedIn] = useContext(UserContext)
+  // useEffect(() => {
+  //   loggedIn(false)
+  // }, [])
 
   const logIn = event => {
     event.prevenDefault()
+    toggleLoggedIn(true)
   }
   return (
     <Fade bottom>

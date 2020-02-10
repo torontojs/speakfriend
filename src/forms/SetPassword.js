@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import StyledButton from '../components/StyledButton'
 import StyledTextInput from '../components/StyledTextInput'
 
-const SetPassword = ({ loggedIn }) => {
+const SetPassword = () => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirm] = useState('')
 
@@ -12,9 +12,9 @@ const SetPassword = ({ loggedIn }) => {
     event.preventDefault()
   }
 
-  useEffect(() => {
-    loggedIn(false)
-  }, [])
+  // useEffect(() => {
+  //   loggedIn(false)
+  // }, [])
 
   return (
     <Fade bottom>

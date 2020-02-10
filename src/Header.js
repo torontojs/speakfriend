@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Fade from 'react-reveal/Fade'
 import { Flex, Box, Text } from 'rebass'
 import styled from 'styled-components'
+import { UserContext } from './context/UserContext'
 
 const StyledBox = styled(Box)`
   padding-bottom: 22px;
@@ -14,39 +15,42 @@ const StyledBox = styled(Box)`
   }
 `
 
-export default ({ showBlurb }) => (
-  <Flex justifyContent="center">
-    <StyledBox>
-      <Fade bottom>
-        <Text
-          fontSize={['32px', '64px']}
-          fontWeight={700}
-          color="#000"
-          letterSpacing={1.2}
-          marginBottom={'15px'}
-        >
-          speakfriend
-        </Text>
-        {showBlurb ? (
+export default ({ showBlurb }) => {
+  const [loggedIn] = useContext(UserContext)
+  return (
+    <Flex justifyContent="center">
+      <StyledBox>
+        <Fade bottom>
           <Text
-            fontSize={['10px', '16px']}
-            fontWeight={200}
+            fontSize={['32px', '64px']}
+            fontWeight={700}
             color="#000"
-            letterSpacing={1}
-            marginLeft="15%"
-            marginRight="15%"
-            marginBottom="10px"
+            letterSpacing={1.2}
+            marginBottom={'15px'}
           >
-            Submit a talk and give event organizers from around the city the
-            opportunity to reach out to you.
-            <br />
-            If you're an event organizer, submit your event and let the talented
-            speakers in our city find your next event.
+            speakfriend
           </Text>
-        ) : (
-          ''
-        )}
-      </Fade>
-    </StyledBox>
-  </Flex>
-)
+          {!loggedIn ? (
+            <Text
+              fontSize={['10px', '16px']}
+              fontWeight={200}
+              color="#000"
+              letterSpacing={1}
+              marginLeft="15%"
+              marginRight="15%"
+              marginBottom="10px"
+            >
+              Submit a talk and give event organizers from around the city the
+              opportunity to reach out to you.
+              <br />
+              If you're an event organizer, submit your event and let the
+              talented speakers in our city find your next event.
+            </Text>
+          ) : (
+            ''
+          )}
+        </Fade>
+      </StyledBox>
+    </Flex>
+  )
+}

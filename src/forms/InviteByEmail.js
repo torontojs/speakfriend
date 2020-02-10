@@ -11,9 +11,9 @@ const InviteByEmail = ({ loggedIn }) => {
     event.preventDefault()
   }
 
-  useEffect(() => {
-    loggedIn(false)
-  }, [])
+  // useEffect(() => {
+  //   loggedIn(false)
+  // }, [])
 
   return (
     <Fade bottom>
@@ -24,6 +24,7 @@ const InviteByEmail = ({ loggedIn }) => {
           display="flex"
           flexDirection="column"
           alignItems="center"
+          marginTop="5%"
         >
           <StyledTextInput
             type="text"
