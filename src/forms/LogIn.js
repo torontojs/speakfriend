@@ -7,15 +7,27 @@ import { UserContext } from '../context/UserContext'
 
 const LogIn = () => {
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [toggleLoggedIn] = useContext(UserContext)
-  // useEffect(() => {
-  //   loggedIn(false)
-  // }, [])
+  const [loggedIn, toggleLoggedIn] = useContext(UserContext)
 
-  const logIn = event => {
-    event.prevenDefault()
-    toggleLoggedIn(true)
+  const logIn = async event => {
+    event.preventDefault()
+
+    let data = {
+      email: email,
+    }
+
+    const response = await fetch('/.netlify/functions/index/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    if (response.status === 200) {
+      toggleLoggedIn(true)
+    } else {
+      console.log('fail')
+    }
   }
   return (
     <Fade bottom>
@@ -33,15 +45,7 @@ const LogIn = () => {
             updateValue={setEmail}
             labelText="email"
           />
-
-          <StyledTextInput
-            type="text"
-            value={password}
-            required
-            updateValue={setPassword}
-            labelText="password"
-          />
-          <StyledButton text="Log In" />
+          <StyledButton text="Send Link" />
         </Box>
       </Flex>
     </Fade>

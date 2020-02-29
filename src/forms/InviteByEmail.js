@@ -7,13 +7,26 @@ import StyledTextInput from '../components/StyledTextInput'
 const InviteByEmail = ({ loggedIn }) => {
   const [email, setEmail] = useState('')
 
-  const invite = event => {
+  const invite = async event => {
     event.preventDefault()
-  }
 
-  // useEffect(() => {
-  //   loggedIn(false)
-  // }, [])
+    let data = {
+      email: email,
+    }
+
+    const response = await fetch('/.netlify/functions/index/invite', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    if (response.status === 200) {
+      console.log(response)
+    } else {
+      console.log('fail')
+    }
+  }
 
   return (
     <Fade bottom>
