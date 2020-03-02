@@ -26,7 +26,7 @@ const LogIn = () => {
     if (response.status === 200) {
       toggleLoggedIn(true)
     } else {
-      console.log('fail')
+      console.log('no user found')
     }
   }
   return (

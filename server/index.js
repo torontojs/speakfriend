@@ -1,5 +1,6 @@
 const express = require('express');
 const serverless = require("serverless-http");
+require('dotenv').config()
 
 const loginRouter = require('./routes/loginRoute')
 const inviteRouter = require('./routes/inviteRoute')

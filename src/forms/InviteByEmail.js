@@ -24,7 +24,7 @@ const InviteByEmail = ({ loggedIn }) => {
     if (response.status === 200) {
       console.log(response)
     } else {
-      console.log('fail')
+      console.log('user is alrady invited to speakfriend')
     }
   }
 
