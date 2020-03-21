@@ -7,6 +7,7 @@ import { UserContext } from '../context/UserContext'
 
 const LogIn = () => {
   const [email, setEmail] = useState('')
+  const [noUserError, toggleNoUserError] = useState(false)
   const [loggedIn, toggleLoggedIn] = useContext(UserContext)
 
   const logIn = async event => {
@@ -22,16 +23,25 @@ const LogIn = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
+    }).then(function(res) {
+      console.log(res)
+      if (res.status === 200) {
+        toggleLoggedIn(true)
+      } else if (res.status === 404) {
+        // okay for now but you need to handle 404 and 500(and others) differently
+        toggleNoUserError(true)
+        console.log('no user found')
+      } else {
+        console.log("emailer doesn't work")
+      }
     })
-    if (response.status === 200) {
-      toggleLoggedIn(true)
-    } else {
-      console.log('no user found')
-    }
   }
   return (
     <Fade bottom>
-      <Flex justifyContent="center" alignItems="center">
+      <Flex justifyContent="center" alignItems="center" flexDirection="column">
+        {noUserError
+          ? 'That email address is not associated to any organizers invited to Speakfriend'
+          : null}
         <Box
           as="form"
           onSubmit={logIn}

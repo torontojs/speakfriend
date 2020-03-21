@@ -6,6 +6,7 @@ import StyledTextInput from '../components/StyledTextInput'
 
 const InviteByEmail = ({ loggedIn }) => {
   const [email, setEmail] = useState('')
+  const [userExistsError, toggleError] = useState(false)
 
   const invite = async event => {
     event.preventDefault()
@@ -25,12 +26,16 @@ const InviteByEmail = ({ loggedIn }) => {
       console.log(response)
     } else {
       console.log('user is alrady invited to speakfriend')
+      toggleError(true)
     }
   }
 
   return (
     <Fade bottom>
-      <Flex justifyContent="center" alignItems="center">
+      <Flex justifyContent="center" alignItems="center" flexDirection="column">
+        {userExistsError
+          ? 'A user by that email has already been invited to Speakfriend'
+          : null}
         <Box
           as="form"
           onSubmit={invite}
