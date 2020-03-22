@@ -12,23 +12,11 @@ loginRouter.post("/", async (req, res) => {
   if (userExists === false) {
     res.status(404).end()
   }
-  // if the user has already been invited
-  // (1) generate a jwt
-  // (2) send the jwt in a magic link to user 
   else {
     let authToken = await generateJWT(email)
 
-    let magicLink = await sendAuthEmail(email, authToken)
+    await sendAuthEmail(email, authToken, res)
 
-    if (magicLink) {
-      res.json({msg: "success"}).status(200).end()
-    }
-    else if (!magicLink) {
-      res.json({msg: "fail"}).status(400).end()
-    }
-
-    // take the authToken and send it via an emailer in the form of a magic link
-    // send a 200 response once the email is sent succesfully
   }
 })
 

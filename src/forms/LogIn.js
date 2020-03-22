@@ -8,6 +8,9 @@ import { UserContext } from '../context/UserContext'
 const LogIn = () => {
   const [email, setEmail] = useState('')
   const [noUserError, toggleNoUserError] = useState(false)
+  const [emailSuccess, toggleSuccess] = useState(false)
+  const [emailFailure, toggleFailure] = useState(false)
+
   const [loggedIn, toggleLoggedIn] = useContext(UserContext)
 
   const logIn = async event => {
@@ -17,7 +20,7 @@ const LogIn = () => {
       email: email,
     }
 
-    const response = await fetch('/.netlify/functions/index/login', {
+    await fetch('/.netlify/functions/index/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -26,12 +29,11 @@ const LogIn = () => {
     }).then(function(res) {
       console.log(res)
       if (res.status === 200) {
-        toggleLoggedIn(true)
+        toggleSuccess(true)
       } else if (res.status === 404) {
-        // okay for now but you need to handle 404 and 500(and others) differently
         toggleNoUserError(true)
-        console.log('no user found')
       } else {
+        toggleFailure(true)
         console.log("emailer doesn't work")
       }
     })
@@ -42,6 +44,10 @@ const LogIn = () => {
         {noUserError
           ? 'That email address is not associated to any organizers invited to Speakfriend'
           : null}
+        {emailSuccess
+          ? 'Check your inbox, you will shortly receive an email that will log you in to Speakfriend'
+          : null}
+        {emailFailure ? 'Something went wrong :( try again later.' : null}
         <Box
           as="form"
           onSubmit={logIn}
