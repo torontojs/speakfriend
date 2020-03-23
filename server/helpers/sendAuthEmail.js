@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-
+const emailTemplate = require("./email-template")
 let options = {
   // find out what the host for torontojs is
   host: 'smtp.gmail.com',
@@ -14,11 +14,12 @@ let options = {
 const transporter = nodemailer.createTransport(options)
 
 const sendAuthEmail = async (email, token, res) => {
+  let emailContent = emailTemplate(token, email)
   var message = {
     from: "@gmail.com",
-    subject: "Your link to Speakfriend",
+    subject: "Your access link to Speakfriend",
     to: email,
-    html: `<h1>You have been invited to Speakfriend</h1> <a href=${token}>Click here!</a>`
+    html: emailContent
   };
   return await transporter.sendMail(message, (err, info) => {
     if(err) {

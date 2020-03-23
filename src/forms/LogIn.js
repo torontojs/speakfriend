@@ -30,10 +30,16 @@ const LogIn = () => {
       console.log(res)
       if (res.status === 200) {
         toggleSuccess(true)
+        toggleFailure(false)
+        toggleNoUserError(false)
       } else if (res.status === 404) {
         toggleNoUserError(true)
+        toggleSuccess(false)
+        toggleFailure(false)
       } else {
         toggleFailure(true)
+        toggleSuccess(false)
+        toggleNoUserError(false)
         console.log("emailer doesn't work")
       }
     })
