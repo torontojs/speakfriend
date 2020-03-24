@@ -62,7 +62,7 @@ const LogIn = () => {
           alignItems="center"
         >
           <StyledTextInput
-            type="text"
+            type="email"
             value={email}
             updateValue={setEmail}
             labelText="email"
