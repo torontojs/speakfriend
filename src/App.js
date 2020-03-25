@@ -12,14 +12,11 @@ import InviteByEmail from './forms/InviteByEmail'
 import SetPassword from './forms/SetPassword'
 import SpeakerForm from './forms/SpeakerForm'
 import { UserContext } from './context/UserContext'
+import Verify from './components/Verify'
 
 export default () => {
   const [loggedIn] = useContext(UserContext)
 
-  useEffect(() => {
-    if (!loggedIn) {
-    }
-  })
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
@@ -27,19 +24,19 @@ export default () => {
           <Box p="12px">
             <Header />
             <Nav />
-            <Route exact path="/">
-              {loggedIn ? (
-                <Redirect to="/talks" />
-              ) : (
-                <Redirect to="/submittalk" />
-              )}
-            </Route>
             <Route path="/submittalk" component={SpeakerForm} />
-            <Route path="/submitevent" component={EventForm} />
-            <Route exact path="/:entity" component={Entity} />
-            <Route path="/login" component={LogIn} />
-            <Route path="/invite" component={InviteByEmail} />
-            <Route path="/setpassword" component={SetPassword} />
+            {loggedIn ? (
+              <>
+                <Route exact path="/:entity" component={Entity} />
+                <Route path="/invite" component={InviteByEmail} />
+                <Route path="/submitevent" component={EventForm} />
+              </>
+            ) : (
+              <>
+                <Route path="/login" component={LogIn} />
+                <Route path="/verify" component={Verify} />
+              </>
+            )}
           </Box>
         </>
       </ThemeProvider>

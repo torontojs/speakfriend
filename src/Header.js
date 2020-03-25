@@ -15,7 +15,7 @@ const StyledBox = styled(Box)`
   }
 `
 
-export default ({ showBlurb }) => {
+export default () => {
   const [loggedIn] = useContext(UserContext)
   return (
     <Flex justifyContent="center">
