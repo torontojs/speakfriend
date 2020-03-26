@@ -40,7 +40,6 @@ const LogIn = () => {
         toggleFailure(true)
         toggleSuccess(false)
         toggleNoUserError(false)
-        console.log("emailer doesn't work")
       }
     })
   }
