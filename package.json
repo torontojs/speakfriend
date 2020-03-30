@@ -20,7 +20,6 @@
     "lint-staged": "^9.5.0",
     "nodemailer": "^6.4.4",
     "npm-run-all": "^4.1.5",
-    "passport-jwt": "^4.0.0",
     "pluralize": "^7.0.0",
     "react": "^16.7.0-alpha.0",
     "react-datetime-picker": "^2.8.0",

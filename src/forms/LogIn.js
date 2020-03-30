@@ -27,7 +27,6 @@ const LogIn = () => {
       },
       body: JSON.stringify(data),
     }).then(function(res) {
-      console.log(res)
       if (res.status === 200) {
         toggleSuccess(true)
         toggleFailure(false)

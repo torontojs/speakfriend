@@ -1,12 +1,20 @@
 const express = require('express');
 const verifyRouter = express.Router();
+const verifyJWT = require("../helpers/verifyJWT")
+
+
 
 
 verifyRouter.get("/", async (req, res) => {
-  let token = req.query
-  console.log(token, "this is the token I got from the client")
+  let token = req.query.token
 
-  // you know have the token, now check to see if it is valid
+  let verified = await verifyJWT(token)
+  console.log(verified.name)
+
+  // if(verified.name === "TokenExpiredError") {
+  //   res.json({msg: "token expired"}).status(400).end()
+  // }
+    
 
 })
 
