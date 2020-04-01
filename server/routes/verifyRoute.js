@@ -8,14 +8,13 @@ const verifyJWT = require("../helpers/verifyJWT")
 verifyRouter.get("/", async (req, res) => {
   let token = req.query.token
 
-  let verified = await verifyJWT(token)
-  console.log(verified.name)
-
-  // if(verified.name === "TokenExpiredError") {
-  //   res.json({msg: "token expired"}).status(400).end()
-  // }
-    
-
+  try {
+    await verifyJWT(token)
+    res.json({ msg: "success"}).status(200).end()
+  }
+  catch(err){
+    res.json({ msg: err.message}).status(400).end()
+  }
 })
 
 
